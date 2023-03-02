@@ -11,7 +11,6 @@ class Lehrer:
             schueler.noten[fach].append(note)
 
 class Schueler:
-
     noten = {
         "deutsch": [],
         "mathe": []
@@ -45,50 +44,50 @@ class Zeugnis:
         print(f"Mathe: {round(schueler.notendurchschnitt('mathe'))}")
         print(f"Erreicht wurde dies in der Schule: {self.schulname}")
 
-
-def getDialogAntwort():
-    try:
-        print("1. Lehrer anlegen")
-        print("2. Schüler anlegen")
-        print("3. Schüler benoten")
-        print("4. Zeugnis erstellen")
-        antwort = int(input("Wählen Sie eine Option: "))
-        return antwort
-    except Exception:
-        print("Error bei Eingabe.")
-        return -1
-
-schueler1 = Schueler("Vinzenz", "Wetzel")
-lehrer1 = Lehrer("Markus", "Scherg", ["deutsch", "mathe"])
-zeugnis = Zeugnis("Berufsschule 1 Bayreuth")
-
-lehrer1.benoten(schueler1, "deutsch", 2)
-lehrer1.benoten(schueler1, "deutsch", 1)
-lehrer1.benoten(schueler1, "deutsch", 3)
-lehrer1.benoten(schueler1, "deutsch", 3)
-lehrer1.benoten(schueler1, "mathe", 2)
-lehrer1.benoten(schueler1, "mathe", 1)
-lehrer1.benoten(schueler1, "mathe", 1)
-lehrer1.benoten(schueler1, "mathe", 5)
-
-dialogAntwort = -1
-while dialogAntwort > 4 or dialogAntwort <= 0:
-    dialogAntwort = getDialogAntwort()
-
-match dialogAntwort:
-    case 1:
-        pass
-    case 2:
-        pass
-    case 3:
-        pass
-    case 4:
-        zeugnis.erstelleZeugnis(schueler1)
-
-
-
-
-
-
-
-
+class Schule:
+    def __init__(self, Schulname):
+        self.schulname = Schulname
+        self.schuelerliste = []
+        self.lehrerliste = []
+    def neu_lehrer(self, lehrer):
+        self.lehrerliste.append(lehrer)
+    def neu_schueler(self, schueler):
+        self.schuelerliste.append(schueler)
+    def schueler_ausgeben(self):
+        for schueler in range(len(self.schuelerliste)):
+            print(self.schuelerliste[schueler].vorname, self.schuelerliste[schueler].nachname)
+    def lehrer_ausgeben(self):
+        for lehrer in range(len(self.lehrerliste)):
+            print(self.lehrerliste[lehrer].vorname, self.lehrerliste[lehrer].nachname)
+baumschule = Schule("Baumschule")
+def dialog():
+    svorname = ""
+    snachname = ""
+    lvorname = ""
+    lnachname = ""
+    lunterrichtsfächer = ""
+    print("Schüler:")
+    baumschule.schueler_ausgeben()
+    print("Lehrer:")
+    baumschule.lehrer_ausgeben()
+    print("was möchten sie tun?")
+    print("1:Schüler erstellen")
+    print("2:Lehrer erstellen")
+    print("3:Noten vergeben")
+    print("4:Zeugnis erstellen")
+    try :
+        eingabe = input(">")
+    except :
+        exit()
+    if eingabe == "1" :
+        svorname = input("vorname: ")
+        snachname = input("nachname: ")
+        baumschule.neu_schueler(Schueler(svorname, snachname))
+    if eingabe == "2" :
+        lvorname = input("vorname: ")
+        lnachname = input("nachname: ")
+        lunterrichtsfächer = input("unterrichtsfächer: ")
+        unterrichtsfächerliste = lunterrichtsfächer.split(",")
+        baumschule.neu_lehrer(Lehrer(lvorname, lnachname, unterrichtsfächerliste))
+while True:
+    dialog()
